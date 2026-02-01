@@ -1,0 +1,38 @@
+:root {
+  /* фон */
+  --bg-main:  #ececec;
+  --bg-card:  #f7f7f7;
+  --bg-input: #ffffff;
+
+  /* текст */
+  --text-main: #1a1a1a;
+  --text-sec:  #555555;
+  --text-mute: #888888;
+
+  /* границы */
+  --border:      #dcdcdc;
+  --border-faint:rgba(0,0,0,0.06);
+
+  /* акцент — чёрный в разных весах */
+  --accent:       #222222;
+  --accent-hover: #000000;
+  --accent-light: #f0f0f0;
+
+  /* тени */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.09);
+
+  /* шрифты */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Nunito Sans', system-ui, sans-serif;
+
+  /* радиусы */
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+
+  /* ease */
+  --ease: cubic-bezier(.16,1,.3,1);
+  --tr:   0.28s var(--ease);
+}

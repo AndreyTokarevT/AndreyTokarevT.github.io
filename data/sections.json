@@ -1,0 +1,13 @@
+{
+  "mounts": [
+    { "id": "header-mount",    "html": "blocks/header.html" },
+    { "id": "hero-mount",      "html": "blocks/hero.html" },
+    { "id": "about-mount",     "html": "blocks/about.html" },
+    { "id": "documents-mount", "html": "blocks/documents.html" },
+    { "id": "programs-mount",  "html": "blocks/programs.html" },
+    { "id": "materials-mount", "html": "blocks/materials.html" },
+    { "id": "results-mount",   "html": "blocks/results.html" },
+    { "id": "contacts-mount",  "html": "blocks/contacts.html" },
+    { "id": "footer-mount",    "html": "blocks/footer.html" }
+  ]
+}

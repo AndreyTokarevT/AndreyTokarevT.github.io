@@ -1,0 +1,120 @@
+.programs {
+  background: var(--bg-main);
+}
+
+.programs__container {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+/* head */
+.programs__head {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.programs__title {
+  font-family: var(--font-body);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.programs__subtitle {
+  font-size: 15px;
+  color: var(--text-mute);
+  max-width: 680px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
+
+/* grid */
+.programs__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* card */
+.programs__card {
+  background: var(--bg-card);
+  border-radius: var(--r-md);
+  padding: 28px;
+  box-shadow: var(--shadow-xs);
+  border: 1px solid var(--border);
+  transition: box-shadow var(--tr), transform var(--tr);
+}
+
+.programs__card:hover {
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.programs__cardTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* download rows */
+.programs__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.programs__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: var(--r-sm);
+  background: var(--bg-main);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--text-sec);
+  transition: background var(--tr);
+}
+
+.programs__row:hover {
+  background: var(--accent-light);
+}
+
+.programs__dl {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  transition: background var(--tr), border-color var(--tr);
+}
+
+.programs__dl:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* responsive */
+@media (max-width: 860px) {
+  .programs__grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 580px) {
+  .programs__container { padding: 48px 16px; }
+  .programs__title { font-size: 28px; }
+  .programs__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
