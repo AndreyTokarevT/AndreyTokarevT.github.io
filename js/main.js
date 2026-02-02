@@ -1,3 +1,4 @@
+/* js/main.js */
 /* ─── Fetch helpers ─── */
 async function loadText(url) {
   const res = await fetch(url, { cache: 'no-store' });
@@ -133,4 +134,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   initMaterialsTabs();
   initCarousels();
   initFooterYear();
+
+  if (window.initHeroPortrait) {
+    window.initHeroPortrait();
+  }
 });

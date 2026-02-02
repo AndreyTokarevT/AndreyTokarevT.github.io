@@ -35,6 +35,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+  align-items: start;
 }
 
 /* card */
@@ -45,6 +46,9 @@
   box-shadow: var(--shadow-xs);
   border: 1px solid var(--border);
   transition: box-shadow var(--tr), transform var(--tr);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .documents__card:hover {
@@ -59,6 +63,8 @@
   margin-bottom: 14px;
   padding-bottom: 10px;
   border-bottom: 1px solid var(--border);
+  width: 100%;
+  text-align: center;
 }
 
 /* list */
@@ -67,6 +73,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-bottom: 18px;
+  width: 100%;
 }
 
 .documents__list li {
@@ -75,25 +83,47 @@
   font-size: 13.5px;
   color: var(--text-sec);
   line-height: 1.5;
+  text-align: center;
 }
 
 .documents__list li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 9px;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--border);
+  display: none;
+}
+
+/* photo wrap — центрирует фото */
+.documents__photoWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* photo container — ограничивает ширину */
+.documents__photo {
+  max-width: 360px;
+  width: 100%;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-main);
+  box-shadow: var(--shadow-xs);
+}
+
+.documents__photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
 }
 
 /* responsive */
 @media (max-width: 860px) {
   .documents__grid { grid-template-columns: 1fr; }
+  .documents__photo { max-width: 320px; }
 }
 
 @media (max-width: 580px) {
   .documents__container { padding: 48px 16px; }
   .documents__title { font-size: 28px; }
+  .documents__photo { max-width: 100%; }
 }

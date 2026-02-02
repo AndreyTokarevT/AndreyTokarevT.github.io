@@ -1,3 +1,4 @@
+<!-- blocks/hero.html -->
 <section id="hero" class="hero">
   <div class="hero__container">
 
@@ -20,13 +21,18 @@
     </div>
 
     <div class="hero__visual">
-      <!-- заменишь на <img> или <video> -->
-      <div class="hero__placeholder">
-        <svg width="44" height="44" viewBox="0 0 44 44" fill="none" class="hero__icon">
-          <circle cx="22" cy="22" r="17" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.3"/>
-          <path d="M18.5 16l9 6-9 6V16z" fill="currentColor" opacity="0.22"/>
-        </svg>
-        <span class="hero__placeholderLabel">Анимация</span>
+      <div
+        class="hero__portrait"
+        role="img"
+        aria-label="Анимированный портрет"
+        data-seq="assets/portrait/01.png,assets/portrait/02.png,assets/portrait/03.png,assets/portrait/04.png,assets/portrait/05.png,assets/portrait/06.png"
+      >
+        <canvas class="hero__canvas"></canvas>
+        <!-- если мешает — удаляй строку ниже -->
+        <div class="hero__hint" aria-hidden="true"></div>
+        <noscript>
+          <img class="hero__fallback" src="assets/portrait/01.png" alt="Портрет">
+        </noscript>
       </div>
     </div>
 
