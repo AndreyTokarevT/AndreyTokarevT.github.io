@@ -1,21 +1,29 @@
 /* js/main.js */
+
 /* ─── Fetch helpers ─── */
 async function loadText(url) {
   const res = await fetch(url, { cache: 'no-store' });
-  if (!res.ok) { console.error('load error:', url); return ''; }
+  if (!res.ok) {
+    console.error('load error:', url);
+    return '';
+  }
   return res.text();
 }
 
 async function loadJSON(url) {
   const res = await fetch(url, { cache: 'no-store' });
-  if (!res.ok) { console.error('json error:', url); return null; }
+  if (!res.ok) {
+    console.error('json error:', url);
+    return null;
+  }
   return res.json();
 }
 
 /* ─── Mount blocks ─── */
 async function mount(id, file) {
   const el = document.getElementById(id);
-  if (el) el.innerHTML = await loadText(file);
+  if (!el) return;
+  el.innerHTML = await loadText(file);
 }
 
 /* ─── Scroll-entrance animations ─── */
@@ -37,12 +45,10 @@ function initHeader() {
   const header = document.getElementById('header');
   if (!header) return;
 
-  // shadow on scroll
   window.addEventListener('scroll', () => {
     header.classList.toggle('scrolled', window.scrollY > 10);
   }, { passive: true });
 
-  // active nav highlight
   const links = header.querySelectorAll('.header__link');
   const sections = [...document.querySelectorAll('section[id]')];
 
@@ -72,6 +78,7 @@ function initMaterialsTabs() {
         t.classList.remove('active');
         t.setAttribute('aria-selected', 'false');
       });
+
       btn.classList.add('active');
       btn.setAttribute('aria-selected', 'true');
 
@@ -91,6 +98,7 @@ function initMaterialsTabs() {
 function scrollCarousel(key, dir) {
   const track = document.querySelector(`.results__carousel[data-carousel="${key}"]`);
   if (!track) return;
+
   const slide = track.querySelector('.results__slide');
   const step = slide ? slide.getBoundingClientRect().width + 14 : 320;
   track.scrollBy({ left: dir * step, behavior: 'smooth' });
@@ -98,18 +106,28 @@ function scrollCarousel(key, dir) {
 
 function initCarousels() {
   document.querySelectorAll('[data-carousel-prev]').forEach(btn => {
-    btn.addEventListener('click', () => scrollCarousel(btn.dataset.carouselPrev, -1));
-  });
-  document.querySelectorAll('[data-carousel-next]').forEach(btn => {
-    btn.addEventListener('click', () => scrollCarousel(btn.dataset.carouselNext, 1));
+    btn.addEventListener('click', () =>
+      scrollCarousel(btn.dataset.carouselPrev, -1)
+    );
   });
 
-  // keyboard nav when carousel is focused
+  document.querySelectorAll('[data-carousel-next]').forEach(btn => {
+    btn.addEventListener('click', () =>
+      scrollCarousel(btn.dataset.carouselNext, 1)
+    );
+  });
+
   document.querySelectorAll('.results__carousel').forEach(el => {
     el.addEventListener('keydown', e => {
       const key = el.dataset.carousel;
-      if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollCarousel(key, -1); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); scrollCarousel(key,  1); }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        scrollCarousel(key, -1);
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        scrollCarousel(key, 1);
+      }
     });
   });
 }
@@ -118,6 +136,31 @@ function initCarousels() {
 function initFooterYear() {
   const el = document.querySelector('[data-year]');
   if (el) el.textContent = new Date().getFullYear();
+}
+
+/* ─── Hero portrait safe init ─── */
+function startHeroPortraitSafe() {
+  const tryStart = () => {
+    const wrap = document.querySelector('#hero-mount .hero__portrait');
+    const canvas = document.querySelector('#hero-mount .hero__canvas');
+
+    if (!wrap || !canvas || !window.initHeroPortrait) return false;
+
+    const r = wrap.getBoundingClientRect();
+    if (r.width < 10 || r.height < 10) return false;
+
+    window.initHeroPortrait();
+    return true;
+  };
+
+  let tries = 0;
+  const step = () => {
+    tries++;
+    if (tryStart() || tries > 60) return;
+    requestAnimationFrame(step);
+  };
+
+  requestAnimationFrame(step);
 }
 
 /* ─── Bootstrap ─── */
@@ -135,7 +178,5 @@ document.addEventListener('DOMContentLoaded', async () => {
   initCarousels();
   initFooterYear();
 
-  if (window.initHeroPortrait) {
-    window.initHeroPortrait();
-  }
+  startHeroPortraitSafe();
 });
