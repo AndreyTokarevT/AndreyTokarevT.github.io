@@ -93,6 +93,10 @@
   transform: translateY(-2px);
 }
 
+.materials__card.hidden {
+  display: none;
+}
+
 .materials__cardTop {
   display: flex;
   justify-content: space-between;
@@ -143,6 +147,17 @@
 .materials__dl:hover {
   border-color: var(--text-main);
   padding-left: 4px;
+}
+
+/* load more */
+.materials__loadMore {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.materials__loadMore.hidden {
+  display: none;
 }
 
 /* responsive */

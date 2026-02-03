@@ -1,6 +1,6 @@
 // js/materials.js
 
-const allMaterials = [
+const MATERIALS = [
   { type: 'presentations', grade: '8 класс', title: 'Общевоинские уставы', text: 'Основы воинской дисциплины и порядок несения службы.', file: 'assets/maters/8_кл_Общевоинские_уставы.pptx' },
   { type: 'presentations', grade: '5–7 класс', title: 'Безопасная эксплуатация бытовых приборов', text: 'Правила безопасности при использовании электроприборов дома.', file: 'assets/maters/Безопасная_эксплуатация_бытовых_приборов.pptx' },
   { type: 'presentations', grade: '10–11 класс', title: 'Виды, назначение и характеристики стрелкового оружия', text: 'Обзор основных видов стрелкового оружия и их характеристики.', file: 'assets/maters/Виды_назначение_и_характеристики_стрелкового.pptx' },
@@ -16,50 +16,63 @@ const allMaterials = [
   { type: 'notes', grade: '9–11 класс', title: 'Терроризм: угроза обществу', text: 'Деловая игра: алгоритмы действий при угрозе теракта, правовая ответственность.', file: 'assets/maters/Терроризм.docx' }
 ];
 
-let currentVisible = 4;
-let currentFilter = 'all';
+let state = {
+  filter: 'all',
+  expanded: false
+};
 
-function renderMaterials() {
-  const grid = document.querySelector('.materials__grid');
-  const loadMoreBtn = document.querySelector('#loadMoreBtn');
-  const loadMoreWrap = document.querySelector('.materials__loadMore');
+function getFiltered() {
+  return state.filter === 'all' 
+    ? MATERIALS 
+    : MATERIALS.filter(m => m.type === state.filter);
+}
 
-  grid.innerHTML = '';
-
-  const filtered = currentFilter === 'all' 
-    ? allMaterials 
-    : allMaterials.filter(m => m.type === currentFilter);
-
-  filtered.slice(0, currentVisible).forEach(mat => {
-    const badgeText = mat.type === 'presentations' ? 'Презентация' : 'Конспект';
-    const ext = mat.file.endsWith('.pptx') ? 'PPTX' : 'DOCX';
-
-    const card = document.createElement('article');
-    card.className = 'materials__card';
-    card.setAttribute('data-type', mat.type);
-    card.innerHTML = `
+function createCard(mat) {
+  const badge = mat.type === 'presentations' ? 'Презентация' : 'Конспект';
+  const ext = mat.file.endsWith('.pptx') ? 'PPTX' : 'DOCX';
+  
+  return `
+    <article class="materials__card" data-type="${mat.type}">
       <div class="materials__cardTop">
-        <span class="materials__badge">${badgeText}</span>
+        <span class="materials__badge">${badge}</span>
         <span class="materials__grade">${mat.grade}</span>
       </div>
       <h3 class="materials__cardTitle">${mat.title}</h3>
       <p class="materials__cardText">${mat.text}</p>
       <a class="materials__dl" href="${mat.file}" download>Скачать ${ext}</a>
-    `;
-    grid.appendChild(card);
-  });
+    </article>
+  `;
+}
 
-  if (currentVisible >= filtered.length) {
-    loadMoreWrap.classList.add('hidden');
+function render() {
+  const grid = document.querySelector('[data-materials-grid]');
+  const btn = document.querySelector('[data-materials-toggle]');
+  const wrap = document.querySelector('.materials__loadMore');
+  
+  if (!grid || !btn || !wrap) return;
+  
+  const filtered = getFiltered();
+  const toShow = state.expanded ? filtered : filtered.slice(0, 4);
+  
+  grid.innerHTML = toShow.map(createCard).join('');
+  
+  if (filtered.length <= 4) {
+    wrap.classList.add('hidden');
   } else {
-    loadMoreWrap.classList.remove('hidden');
+    wrap.classList.remove('hidden');
+    btn.textContent = state.expanded ? 'Свернуть' : 'Показать ещё';
   }
 }
 
-function initMaterialsLoad() {
+function init() {
   const tabs = document.querySelectorAll('.materials__tab');
-  const loadMoreBtn = document.querySelector('#loadMoreBtn');
-
+  const btn = document.querySelector('[data-materials-toggle]');
+  
+  if (!tabs.length || !btn) {
+    setTimeout(init, 100);
+    return;
+  }
+  
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => {
@@ -68,19 +81,23 @@ function initMaterialsLoad() {
       });
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
-
-      currentFilter = tab.dataset.tab || 'all';
-      currentVisible = 4;
-      renderMaterials();
+      
+      state.filter = tab.dataset.tab || 'all';
+      state.expanded = false;
+      render();
     });
   });
-
-  loadMoreBtn.addEventListener('click', () => {
-    currentVisible += 4;
-    renderMaterials();
+  
+  btn.addEventListener('click', () => {
+    state.expanded = !state.expanded;
+    render();
   });
-
-  renderMaterials();
+  
+  render();
 }
 
-document.addEventListener('DOMContentLoaded', initMaterialsLoad);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
