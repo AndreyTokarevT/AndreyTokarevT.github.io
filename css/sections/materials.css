@@ -1,19 +1,16 @@
 .materials {
   background: var(--bg-main);
 }
-
 .materials__container {
   max-width: 1160px;
   margin: 0 auto;
   padding: 60px 24px;
 }
-
 /* head */
 .materials__head {
   text-align: center;
   margin-bottom: 24px;
 }
-
 .materials__title {
   font-family: var(--font-body);
   font-size: 32px;
@@ -21,7 +18,6 @@
   color: var(--text-main);
   margin-bottom: 8px;
 }
-
 .materials__subtitle {
   font-size: 15px;
   color: var(--text-mute);
@@ -29,7 +25,6 @@
   margin: 0 auto;
   line-height: 1.55;
 }
-
 /* tabs */
 .materials__tabs {
   display: flex;
@@ -38,7 +33,6 @@
   justify-content: center;
   margin-bottom: 28px;
 }
-
 .materials__tab {
   border: 1.5px solid var(--border);
   background: var(--bg-card);
@@ -54,27 +48,23 @@
     border-color var(--tr),
     transform    var(--tr);
 }
-
 .materials__tab:hover {
   background: var(--accent-light);
   color: var(--text-main);
   border-color: #bbb;
   transform: translateY(-1px);
 }
-
 .materials__tab.active {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
 }
-
 /* grid */
 .materials__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
-
 /* card */
 .materials__card {
   background: var(--bg-card);
@@ -87,23 +77,19 @@
   gap: 10px;
   transition: box-shadow var(--tr), transform var(--tr);
 }
-
 .materials__card:hover {
   box-shadow: var(--shadow-sm);
   transform: translateY(-2px);
 }
-
 .materials__card.hidden {
   display: none;
 }
-
 .materials__cardTop {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
 }
-
 .materials__badge {
   font-size: 11.5px;
   font-weight: 700;
@@ -113,26 +99,22 @@
   color: var(--text-main);
   border: 1px solid var(--border);
 }
-
 .materials__grade {
   font-size: 12px;
   color: var(--text-mute);
   font-weight: 600;
 }
-
 .materials__cardTitle {
   font-size: 16px;
   font-weight: 700;
   color: var(--text-main);
 }
-
 .materials__cardText {
   font-size: 13.5px;
   color: var(--text-sec);
   line-height: 1.5;
   flex: 1;
 }
-
 .materials__dl {
   display: inline-block;
   margin-top: auto;
@@ -143,29 +125,98 @@
   border-bottom: 1.5px solid var(--border);
   transition: border-color var(--tr), padding-left var(--tr);
 }
-
 .materials__dl:hover {
   border-color: var(--text-main);
   padding-left: 4px;
 }
-
 /* load more */
 .materials__loadMore {
   display: flex;
   justify-content: center;
   margin-top: 32px;
 }
-
 .materials__loadMore.hidden {
   display: none;
 }
-
 /* responsive */
 @media (max-width: 860px) {
   .materials__grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 580px) {
-  .materials__container { padding: 48px 16px; }
-  .materials__title { font-size: 28px; }
+  .materials__container { padding: 36px 16px; }
+  
+  .materials__head {
+    margin-bottom: 20px;
+  }
+  
+  .materials__title { 
+    font-size: 26px;
+    margin-bottom: 6px;
+  }
+  
+  .materials__subtitle {
+    font-size: 14px;
+  }
+  
+  /* Компактные табы */
+  .materials__tabs {
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+  
+  .materials__tab {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  /* 2 колонки на мобильных */
+  .materials__grid { 
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  
+  /* Очень компактные карточки */
+  .materials__card {
+    padding: 12px;
+    gap: 6px;
+  }
+  
+  .materials__cardTop {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .materials__badge {
+    font-size: 9.5px;
+    padding: 2px 6px;
+  }
+  
+  .materials__grade {
+    font-size: 10px;
+  }
+  
+  .materials__cardTitle {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+  
+  .materials__cardText {
+    font-size: 11.5px;
+    line-height: 1.4;
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .materials__dl {
+    font-size: 11px;
+    margin-top: 2px;
+  }
+  
+  .materials__loadMore {
+    margin-top: 20px;
+  }
 }

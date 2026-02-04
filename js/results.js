@@ -15,6 +15,7 @@ let lightboxState = {
   currentType: null,
   currentIndex: 0
 };
+let initialized = false;
 
 function createSlide(filename, folder, idx) {
   return `
@@ -45,16 +46,21 @@ function updateCarousel(type) {
   const slides = track.querySelectorAll('.results__slide');
   if (!slides.length) return;
 
+  // На мобильных не применяем transform, используется нативная прокрутка
+  if (window.matchMedia('(max-width: 640px)').matches) {
+    return;
+  }
+
   const perView = getSlidesPerView();
   const maxIndex = Math.max(0, slides.length - perView);
 
   carousel.currentIndex = clamp(carousel.currentIndex, 0, maxIndex);
 
-  // Двигаем по одной карточке
-  const slideW = slides[0].getBoundingClientRect().width;
-  const offsetPx = -(carousel.currentIndex * slideW);
+  // Используем процентное смещение для надежности
+  const slidePercent = 100 / perView;
+  const offsetPercent = -(carousel.currentIndex * slidePercent);
 
-  track.style.transform = `translateX(${offsetPx}px)`;
+  track.style.transform = `translateX(${offsetPercent}%)`;
 
   prevBtn.disabled = carousel.currentIndex === 0;
   nextBtn.disabled = carousel.currentIndex >= maxIndex;
@@ -217,14 +223,26 @@ function updateLightbox() {
 }
 
 function initResults() {
+  if (initialized) {
+    console.log('Карусели уже инициализированы, пропускаем');
+    return;
+  }
+  
+  console.log('initResults вызван');
+  
   const personalCarousel = document.querySelector('[data-carousel="personal"]');
   const teamCarousel = document.querySelector('[data-carousel="team"]');
 
+  console.log('personalCarousel:', personalCarousel);
+  console.log('teamCarousel:', teamCarousel);
+
   if (!personalCarousel || !teamCarousel) {
+    console.log('Карусели не найдены, повторная попытка через 100ms');
     setTimeout(initResults, 100);
     return;
   }
 
+  console.log('Инициализация каруселей...');
   initCarousel('personal', personalAwards, 's');
   initCarousel('team', teamAwards, 't');
 
@@ -232,10 +250,22 @@ function initResults() {
   window.addEventListener('resize', () => {
     Object.keys(carousels).forEach(updateCarousel);
   });
+  
+  initialized = true;
+  console.log('Карусели инициализированы');
 }
 
+// Ждем события blocksLoaded от main.js или загрузки DOM
+window.addEventListener('blocksLoaded', initResults);
+
+// Запасной вариант - ждем полной загрузки
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initResults);
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(initResults, 300);
+  });
 } else {
-  initResults();
+  setTimeout(initResults, 300);
 }
+
+// Дополнительная попытка через 1 секунду на случай медленной загрузки
+setTimeout(initResults, 1000);

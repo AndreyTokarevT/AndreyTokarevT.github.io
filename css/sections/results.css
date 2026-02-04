@@ -67,6 +67,7 @@
   overflow: hidden;
   position: relative;
   border-radius: var(--r-md);
+  width: 100%;
 }
 
 .results__track {
@@ -97,6 +98,7 @@
   transition: box-shadow var(--tr), transform var(--tr);
   cursor: pointer;
   aspect-ratio: 3 / 4;
+  min-height: 280px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -196,7 +198,7 @@
 .results__lightboxImg {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   display: block;
 }
@@ -265,20 +267,131 @@
   transform: translateY(-50%) scale(1);
 }
 
+/* Responsive */
 @media (max-width: 860px) {
+  .results__container { padding: 48px 20px; }
+  .results__title { font-size: 28px; }
+  
   .results__lightbox { padding: 40px 20px; }
-  .results__lightboxContent { padding: 18px; }
   .results__lightboxNav--prev { left: 15px; }
   .results__lightboxNav--next { right: 15px; }
+  
+  .results__carouselWrap {
+    gap: 8px;
+  }
+  
+  .results__nav {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
 }
 
-@media (max-width: 580px) {
-  .results__lightbox { padding: 30px 15px; }
-  .results__lightboxContent {
-    width: calc(100vw - 30px);
-    height: 75vh;
-    padding: 14px;
+@media (max-width: 640px) {
+  .results__container { 
+    padding: 36px 16px; 
   }
-  .results__lightboxClose { top: 12px; right: 12px; }
-  .results__lightboxNav { width: 44px; height: 44px; font-size: 28px; }
+  
+  .results__head {
+    margin-bottom: 20px;
+  }
+  
+  .results__title {
+    font-size: 26px;
+    margin-bottom: 6px;
+  }
+  
+  .results__subtitle {
+    font-size: 14px;
+  }
+  
+  /* Блоки друг под другом, но компактно */
+  .results__sections {
+    gap: 20px;
+  }
+  
+  .results__block { 
+    padding: 18px; 
+  }
+  
+  .results__blockHead {
+    margin-bottom: 14px;
+  }
+  
+  .results__blockTitle {
+    font-size: 17px;
+  }
+  
+  /* На мобильных скрываем кнопки навигации */
+  .results__nav {
+    display: none;
+  }
+  
+  .results__carouselWrap {
+    gap: 0;
+  }
+  
+  /* Включаем прокрутку свайпом */
+  .results__carousel {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  
+  .results__carousel::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .results__track {
+    transition: none;
+  }
+  
+  .results__slide {
+    scroll-snap-align: start;
+    flex: 0 0 100%;
+    padding: 6px;
+  }
+  
+  .results__slideInner {
+    aspect-ratio: 3 / 4;
+    min-height: 240px;
+  }
+  
+  /* Лайтбокс на мобильных */
+  .results__lightbox { 
+    padding: 20px 10px; 
+  }
+  
+  .results__lightboxContent {
+    width: calc(100vw - 20px);
+    height: 80vh;
+  }
+  
+  .results__lightboxFrame {
+    border-radius: 8px;
+  }
+  
+  .results__lightboxImg {
+    object-fit: contain;
+  }
+  
+  .results__lightboxClose { 
+    top: 8px; 
+    right: 8px;
+    width: 36px;
+    height: 36px;
+    font-size: 24px;
+  }
+  
+  .results__lightboxNav { 
+    width: 40px; 
+    height: 40px; 
+    font-size: 28px;
+    background: rgba(255,255,255,0.2);
+  }
+  
+  .results__lightboxNav--prev { left: 8px; }
+  .results__lightboxNav--next { right: 8px; }
 }

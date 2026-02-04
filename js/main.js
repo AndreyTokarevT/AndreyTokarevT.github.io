@@ -94,44 +94,6 @@ function initMaterialsTabs() {
   });
 }
 
-/* ─── Results carousels ─── */
-function scrollCarousel(key, dir) {
-  const track = document.querySelector(`.results__carousel[data-carousel="${key}"]`);
-  if (!track) return;
-
-  const slide = track.querySelector('.results__slide');
-  const step = slide ? slide.getBoundingClientRect().width + 14 : 320;
-  track.scrollBy({ left: dir * step, behavior: 'smooth' });
-}
-
-function initCarousels() {
-  document.querySelectorAll('[data-carousel-prev]').forEach(btn => {
-    btn.addEventListener('click', () =>
-      scrollCarousel(btn.dataset.carouselPrev, -1)
-    );
-  });
-
-  document.querySelectorAll('[data-carousel-next]').forEach(btn => {
-    btn.addEventListener('click', () =>
-      scrollCarousel(btn.dataset.carouselNext, 1)
-    );
-  });
-
-  document.querySelectorAll('.results__carousel').forEach(el => {
-    el.addEventListener('keydown', e => {
-      const key = el.dataset.carousel;
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        scrollCarousel(key, -1);
-      }
-      if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        scrollCarousel(key, 1);
-      }
-    });
-  });
-}
-
 /* ─── Footer year ─── */
 function initFooterYear() {
   const el = document.querySelector('[data-year]');
@@ -175,8 +137,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   initScrollAnims();
   initHeader();
   initMaterialsTabs();
-  initCarousels();
   initFooterYear();
 
   startHeroPortraitSafe();
+
+  // Отправляем событие что все блоки загружены
+  // Это нужно для инициализации results.js
+  window.dispatchEvent(new Event('blocksLoaded'));
+  console.log('Все блоки загружены, событие blocksLoaded отправлено');
 });
