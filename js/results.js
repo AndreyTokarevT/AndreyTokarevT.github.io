@@ -102,9 +102,13 @@ function initCarousel(type, awards, folder) {
     updateCarousel(type);
   });
 
-  // Открытие лайтбокса
+  // Открытие лайтбокса (только на десктопе)
   track.querySelectorAll('.results__slide').forEach((slide) => {
     slide.addEventListener('click', () => {
+      // Не открываем лайтбокс на мобильных
+      if (window.matchMedia('(max-width: 640px)').matches) {
+        return;
+      }
       const idx = parseInt(slide.dataset.idx, 10);
       openLightbox(type, idx);
     });

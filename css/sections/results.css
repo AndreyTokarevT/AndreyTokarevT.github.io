@@ -186,13 +186,13 @@
 .results__lightboxFrame {
   width: 100%;
   height: 100%;
-  background: #fff;
-  border-radius: 14px;
+  background: transparent;
+  border-radius: 0;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 15px 70px rgba(0,0,0,0.9);
+  box-shadow: none;
 }
 
 .results__lightboxImg {
@@ -336,6 +336,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
@@ -346,10 +347,12 @@
   
   .results__track {
     transition: none;
+    display: flex;
   }
   
   .results__slide {
     scroll-snap-align: start;
+    scroll-snap-stop: always;
     flex: 0 0 100%;
     padding: 6px;
   }
@@ -357,6 +360,7 @@
   .results__slideInner {
     aspect-ratio: 3 / 4;
     min-height: 240px;
+    pointer-events: none;
   }
   
   /* Лайтбокс на мобильных */
