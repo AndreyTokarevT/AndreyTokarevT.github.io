@@ -189,6 +189,11 @@ function createLightbox() {
 let lightboxElements = null;
 
 function openLightbox(type, index) {
+  // Отключаем лайтбокс на мобильных устройствах
+  if (window.matchMedia('(max-width: 640px)').matches) {
+    return;
+  }
+  
   if (!lightboxElements) {
     lightboxElements = createLightbox();
   }
