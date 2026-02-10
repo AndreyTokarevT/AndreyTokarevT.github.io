@@ -1,12 +1,12 @@
 // js/results.js
 
 const personalAwards = [
-  '1.webp', '2.webp', '3.webp', '4.webp', '5.webp',
-  '6.webp', '7.webp', '8.webp', '9.webp', '10.webp'
+  '8.webp', '1.webp', '3.webp', '4.webp', '5.webp',
+  '7.webp','2.webp', '6.webp','9.webp', '1.png', '10.webp'
 ];
 
 const teamAwards = [
-  '1.webp', '2.webp', '3.webp', '4.webp', '5.webp', '6.webp'
+  '1.jpg', '2.webp', '1.webp', '6.webp', '3.webp', '4.webp', '5.webp'
 ];
 
 let carousels = {};
